@@ -1,0 +1,28 @@
+server:
+  port: 9091
+  servlet:
+    context-path: /firstClass
+
+first-class:
+  jdbc:
+    dbType: ${environment.db.dbType:MYSQL}
+    dataSource:
+      url: ${environment.db.url}
+      username: ${environment.db.username}
+      password: ${environment.db.password}
+  engine:
+    system-name: 'FIRSTCLASS'
+    environment: ${environment.env}
+
+spring:
+  application:
+    name: first-class
+  jmx:
+    enabled: false
+  redis:
+    host: ${environment.redis.ip:localhost}
+    port: ${environment.redis.port:6379}
+    password: ${environment.redis.password:}
+    database: ${environment.redis.database:0}
+    liquibase:
+      enabled: false

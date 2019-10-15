@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015 - 2019. Shanghai Zhenhui Information Technology Co,. ltd.
+  ~ All rights are reserved.
+  ~
+  -->
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <property name="now" value="now()" dbms="mysql"/>
+    <changeSet id="2019101419594401" author="wangkai">
+        <createTable tableName="fc_label" remarks="标签表">
+            <column name="id" type="bigint" autoIncrement="true"  remarks="id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="type" type="varchar(200)" remarks="标签类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(200)" remarks="标签名称"/>
+            <column name="created_date" type="timestamp" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="fc_label" indexName="idx_fc_label_type" unique="true">
+            <column name="type"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

@@ -10,4 +10,6 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
     <include file="fc_label.xml" relativeToChangelogFile="true"/>
+    <include file="fc_blog.xml" relativeToChangelogFile="true"/>
+    <include file="fc_user.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

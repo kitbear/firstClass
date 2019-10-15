@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015 - 2019. Shanghai Zhenhui Information Technology Co,. ltd.
+  ~ All rights are reserved.
+  ~
+  -->
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <property name="now" value="now()" dbms="mysql"/>
+    <changeSet id="2019101514203501" author="wangkai">
+        <createTable tableName="fc_user" remarks="用户基础信息及状态表">
+            <column name="id" type="bigint" autoIncrement="true"  remarks="id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_oid" type="varchar(36)" remarks="用户oid">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="user_ip" type="varchar(20)" remarks="用户ip">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contact_id" type="bigint" remarks="用户信息表id">
+                <constraints nullable="false"/>
+            </column>
+            <column name="login_no" type="varchar(50)" remarks="用户登录名">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password_hash" type="varchar(60)" remarks="用户登录密码">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_deleted" type="bit" remarks="是否删除" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" remarks="创建时间" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="timestamp" remarks="最后更新时间" defaultValue="${now}"/>
+        </createTable>
+
+        <createIndex tableName="fc_user" indexName="idx_fc_user_oid" unique="true">
+            <column name="user_oid"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="2019101514203502" author="wangkai">
+        <createTable tableName="fc_contact" remarks="用户基础表">
+            <column name="id" type="bigint" autoIncrement="true"  remarks="id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="contact_oid" type="varchar(36)" remarks="用户信息oid">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="nick_name" type="varchar(50)" remarks="用户昵称"/>
+            <column name="age" type="tinyint" remarks="用户年龄"/>
+            <column name="gender" type="int" remarks="性别" defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="head_portrait" type="varchar(50)" remarks="用户头像"/>
+            <column name="email" type="varchar(50)" remarks="用户邮箱"/>
+            <column name="phone" type="varchar(50)" remarks="用户电话"/>
+            <column name="created_date" type="timestamp" remarks="创建时间" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="timestamp" remarks="最后更新时间" defaultValue="${now}"/>
+        </createTable>
+
+        <createIndex tableName="fc_contact" indexName="idx_fc_contact_oid" unique="true">
+            <column name="contact_oid"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

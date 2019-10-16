@@ -11,7 +11,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
     <property name="now" value="now()" dbms="mysql"/>
     <changeSet id="2019101514205501" author="wangkai">
-        <createTable tableName="fc_blog_content" remarks="博文表">
+        <createTable tableName="fc_blog" remarks="博文表">
             <column name="id" type="bigint" autoIncrement="true"  remarks="id">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -36,15 +36,15 @@
             </column>
         </createTable>
 
-        <createIndex tableName="fc_blog_content" indexName="idx_fc_blog_title" unique="false">
+        <createIndex tableName="fc_blog" indexName="idx_fc_blog_title" unique="false">
             <column name="title"/>
         </createIndex>
 
-        <createIndex tableName="fc_blog_content" indexName="idx_fc_blog_oid" unique="true">
+        <createIndex tableName="fc_blog" indexName="idx_fc_blog_oid" unique="true">
             <column name="blog_oid"/>
         </createIndex>
 
-        <createIndex tableName="fc_blog_content" indexName="idx_fc_blog_user_id" unique="false">
+        <createIndex tableName="fc_blog" indexName="idx_fc_blog_user_id" unique="false">
             <column name="user_id"/>
         </createIndex>
     </changeSet>

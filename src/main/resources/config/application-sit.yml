@@ -12,10 +12,11 @@ environment:
     url: jdbc:mysql://127.0.0.1:3306/firstClass?useUnicode=true&characterEncoding=utf8
     username: root
     password: 123456
+  env: SIT
   redis:
     ip: localhost
 logging:
-  config:
+  config: classpath:logback/logback.xml
   level:
     jp.spendia.vendor.pittouch: debug
 

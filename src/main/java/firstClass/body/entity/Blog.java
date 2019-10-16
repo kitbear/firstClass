@@ -17,8 +17,8 @@ import java.util.UUID;
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@TableName("fc_blog_content")
-public class BlogContent extends BaseObject{
+@TableName("fc_blog")
+public class Blog extends BaseObject{
 
     @TableField(value = "blog_oid")
     private UUID blogOID;

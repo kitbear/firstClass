@@ -6,7 +6,11 @@ import com.baomidou.mybatisplus.core.parser.ISqlParser;
 import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.SqlExplainInterceptor;
+import constants.Environment;
 import liquibase.integration.spring.SpringLiquibase;
+import liquibase.sql.Sql;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.BeansException;
@@ -29,12 +33,14 @@ import java.util.List;
 abstract public class AbstractJdbcAutoConfiguration implements ApplicationContextAware {
     protected final JdbcProperties jdbcProperties;
     protected DataSource dataSource;
+    private final ServiceEngineProperties serviceEngineProperties;
     private final ResourceLoader resourceLoader;
     private JdbcFixedProperties jdbcFixedProperties;
     private ApplicationContext applicationContext;
 
-    public AbstractJdbcAutoConfiguration(JdbcProperties jdbcProperties, ResourceLoader resourceLoader) {
+    public AbstractJdbcAutoConfiguration(JdbcProperties jdbcProperties, ServiceEngineProperties serviceEngineProperties, ResourceLoader resourceLoader) {
         this.jdbcProperties = jdbcProperties;
+        this.serviceEngineProperties = serviceEngineProperties;
         this.resourceLoader = resourceLoader;
     }
 
@@ -76,6 +82,14 @@ abstract public class AbstractJdbcAutoConfiguration implements ApplicationContex
         List<Interceptor> interceptors = new ArrayList<>();
         interceptors.add(getPaginationInterceptor(jdbcProperties.getDbType()));
         interceptors.add(new OptimisticLockerInterceptor());
+        if (serviceEngineProperties.getEnvironment().equals(Environment.DEV)) {
+            PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
+            performanceInterceptor.setFormat(true);
+            performanceInterceptor.setMaxTime(200);
+            performanceInterceptor.setWriteInLog(false);
+            interceptors.add(performanceInterceptor);
+            interceptors.add(new SqlExplainInterceptor());
+        }
         List<Interceptor> customInterceptors = getCustomInterceptors();
         if (customInterceptors.size() > 0) {
             interceptors.addAll(customInterceptors);
@@ -89,7 +103,7 @@ abstract public class AbstractJdbcAutoConfiguration implements ApplicationContex
      *
      * @return
      */
-    private List<Interceptor> getCustomInterceptors() {
+    protected List<Interceptor> getCustomInterceptors() {
         return Collections.emptyList();
     }
 
@@ -100,7 +114,7 @@ abstract public class AbstractJdbcAutoConfiguration implements ApplicationContex
         return paginationInterceptor;
     }
 
-    private ISqlParser getPaginationSqlParser() {
+    protected ISqlParser getPaginationSqlParser() {
         return null;
     }
 

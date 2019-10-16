@@ -16,7 +16,7 @@ import java.util.UUID;
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@TableName("fc_user")
+@TableName("fc_contact")
 public class Contact extends BaseObject{
 
     @TableField(value = "contact_oid")

@@ -34,7 +34,7 @@ import java.util.Map;
 public class FirstClassJdbcAutoConfiguration extends AbstractJdbcAutoConfiguration {
 
     public FirstClassJdbcAutoConfiguration(FirstClassProperties properties, ResourceLoader resourceLoader) {
-        super(properties.getJdbc(), resourceLoader);
+        super(properties.getJdbc(), properties.getEngine(), resourceLoader);
     }
 
     @Override
@@ -52,15 +52,16 @@ public class FirstClassJdbcAutoConfiguration extends AbstractJdbcAutoConfigurati
 
     @Override
     protected DataSource initDataSource() {
-        Map<String, DataSource> dataSourceMap = new LinkedHashMap<>();
-        dataSourceMap.put("ds0", JdbcBuilder.buildDataSource(this.jdbcProperties.getDataSource()));
-        ShardingRuleConfiguration config = new ShardingRuleConfiguration();
-        config.setDefaultDataSourceName("ds0");
-        try {
-            return ShardingDataSourceFactory.createDataSource(dataSourceMap, config, new LinkedHashMap<>(), null);
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to init ShardingDataSource", e);
-        }
+//        Map<String, DataSource> dataSourceMap = new LinkedHashMap<>();
+//        dataSourceMap.put("ds0", JdbcBuilder.buildDataSource(this.jdbcProperties.getDataSource()));
+////        ShardingRuleConfiguration config = new ShardingRuleConfiguration();
+////        config.setDefaultDataSourceName("ds0");
+//        try {
+//            return ShardingDataSourceFactory.createDataSource(dataSourceMap, config, new LinkedHashMap<>(), null);
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Failed to init ShardingDataSource", e);
+//        }
+        return JdbcBuilder.buildDataSource(this.jdbcProperties.getDataSource());
     }
 
     @Bean(name = "firstClassSqlSessionFactory")

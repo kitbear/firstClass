@@ -13,5 +13,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 public class FirstClassProperties {
     @NestedConfigurationProperty
     private JdbcProperties jdbc;
+    @NestedConfigurationProperty
+    private ServiceEngineProperties engine;
 
 }
